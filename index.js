@@ -16,7 +16,7 @@ restService.post('/echo', function (req, res) {
     var http = require('http');        
 
     return res.json({
-        speech: req.body.result.contexts.parameters.EatingTime ,
+        speech: req.body.result.parameters.EatingTime ,
         displayText: speech,
         source: 'webhook-echo-sample'
     });
