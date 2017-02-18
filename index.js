@@ -13,23 +13,10 @@ restService.use(bodyParser.json());
 
 restService.post('/echo', function (req, res) {
     var speech = req.body.result && req.body.result.parameters && req.body.result.parameters.echoText ? req.body.result.parameters.echoText : "Seems like some problem. Speak again."
-    var http = require('http');
-    var response;
-    var options = {
-        host: 'http://alfredapi20170217032800.azurewebsites.net/api/values/Get',
-        port: 80,       
-    };
-
-    http.get(options, function (resp) {
-        resp.on('data', function (chunk) {
-             response=resp;
-        });
-    }).on("error", function (e) {
-        console.log("Got error: " + e.message);
-    });
+    var http = require('http');        
 
     return res.json({
-        speech: response[0],
+        speech: req.body.result.contexts.parameters.EatingTime ,
         displayText: speech,
         source: 'webhook-echo-sample'
     });
