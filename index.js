@@ -21,7 +21,6 @@ restService.post('/echo', function (req, res) {
     var item="CocaCola";
     var FoodTime = req.body.result.parameters.EatingTime;
     return res.json({
-
         speech: item,
         displayText: speech,
         source: 'webhook-echo-sample'
