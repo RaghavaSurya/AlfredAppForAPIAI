@@ -28,7 +28,8 @@ restService.post('/echo', function (req, res) {
 });
 
 restService.get('/ss', function (req, res) {
-    var Connection = require('mssql').Connection;
+    
+    var sql = require('mssql').Connection;
     var config = {
         userName: 'AlfredAdmin',
         password: '@lfred123',
@@ -43,7 +44,7 @@ restService.get('/ss', function (req, res) {
         var request=new sql.Request();
 
         request.query('Select * from Food',function(err,recordSet){
-            
+
             if(err) console.log(err);
 
             res.send(recordSet);
