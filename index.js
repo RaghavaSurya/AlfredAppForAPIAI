@@ -18,7 +18,7 @@ restService.use(bodyParser.json());
 restService.post('/echo', function (req, res) {
     var speech = req.body.result && req.body.result.parameters && req.body.result.parameters.echoText ? req.body.result.parameters.echoText : "Seems like some problem. Speak again."
     var http = require('http');
-    var item="CocaCola";
+    var item = "CocaCola";
     var FoodTime = req.body.result.parameters.EatingTime;
     return res.json({
         speech: item,
@@ -27,22 +27,28 @@ restService.post('/echo', function (req, res) {
     });
 });
 
-restService.get('/ss',function(req,res){
-    var Connection = require('tedious').Connection;  
-    var config = {  
-        userName: 'AlfredAdmin',  
-        password: '@lfred123',  
-        server: 'alfredapi.database.windows.net',  
+restService.get('/ss', function (req, res) {
+    var Connection = require('mssql').Connection;
+    var config = {
+        userName: 'AlfredAdmin',
+        password: '@lfred123',
+        server: 'alfredapi.database.windows.net',     
         // If you are on Microsoft Azure, you need this:  
-        options: {encrypt: true, database: 'AlfredDatabase'}  
-    };  
-    var connection = new Connection(config);  
-    connection.on('connect', function(err) {  
-    // If no error, then good to proceed.  
-        console.log("Connected");  
-        res.send("Connected to sql server");
-    });
-    res.send("Connected");
+        options: { encrypt: true, database: 'AlfredDatabase' }
+    };
+    
+    sql.connect(config,function(err){
+        if(err) console.log(err);
+
+        var request=new sql.Request();
+
+        request.query('Select * from Food',function(err,recordSet){
+            
+            if(err) console.log(err);
+
+            res.send(recordSet);
+        })
+    })
 })
 
 
