@@ -28,8 +28,8 @@ restService.post('/echo', function (req, res) {
 });
 
 restService.get('/ss', function (req, res) {
-    
-    var sql = require('mssql').Connection;
+
+    var sql = require('mssql');
     var config = {
         userName: 'AlfredAdmin',
         password: '@lfred123',
@@ -39,6 +39,7 @@ restService.get('/ss', function (req, res) {
     };
     
     sql.connect(config,function(err){
+
         if(err) console.log(err);
 
         var request=new sql.Request();
