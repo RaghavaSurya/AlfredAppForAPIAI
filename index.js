@@ -40,14 +40,13 @@ restService.get('/ss', function (req, res) {
     
     sql.connect(config,function(err){
 
-        if(err) console.log(err);
+        if(err) res.send(err);
 
         var request=new sql.Request();
 
         request.query('Select * from Food',function(err,recordSet){
 
-            if(err) console.log(err);
-
+            if(err) res.send(err);
             res.send(recordSet);
         })
     })
