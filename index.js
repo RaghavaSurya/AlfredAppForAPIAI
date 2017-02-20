@@ -16,7 +16,7 @@ restService.use(bodyParser.urlencoded({
 restService.use(bodyParser.json());
 
 restService.post('/echo', function (req, res) {
-    var speech = req.body.result && req.body.result.parameters && req.body.result.parameters.echoText ? req.body.result.parameters.echoText : "Seems like some problem. Speak again."
+    var speech = req.body.result && req.body.result.parameters && req.body.result.parameters.echoText ? req.body.result.parameters.echoText : "Seems like some problem. Speak again.";
     var http = require('http');
     var item = "CocaCola";
     var FoodTime = req.body.result.parameters.EatingTime;
@@ -29,29 +29,33 @@ restService.post('/echo', function (req, res) {
 
 restService.get('/ss', function (req, res) {
 
+
+    // var db=require('node-localdb');
+    // var food=db('Food.json');
+    // food.insert({FoodName:'Gobi Manchuria',Type:'Starter',})
+
+    // res.send('done');
+
     var sql = require('mssql');
     var config = {
-        userName: 'AlfredAdmin',
-        password: '@lfred123',
-        server: 'alfredapi.database.windows.net',     
-        // If you are on Microsoft Azure, you need this:  
-        options: { encrypt: true, database: 'AlfredDatabase' }
+        user: 'AlfredAdmin',
+        password: 'Alfred123',
+        server: 'alfredapi.database.windows.net',
+        database: 'AlfredDatabase',
+        port:1433,
+        options: {
+            encrypt: true
+        }
     };
-    
-    sql.connect(config,function(err){
 
-        if(err) res.send(err);
+    var connection=new sql.Connection(config);
+    connection.connect();
 
-        var request=new sql.Request();
-
-        request.query('Select * from Food',function(err,recordSet){
-
-            if(err) res.send(err);
-            res.send(recordSet);
-        })
-    })
-})
-
-
-
-
+    var request=new sql.Request(connection);
+    var sqlQuery="Select * from Food";
+    request.query(sqlQuery,function(err,recordset){
+        if(err) res.json(err);
+        else
+        res.json(recordset);
+    });
+});
