@@ -15,18 +15,34 @@ restService.post('/echo', function (req, res) {
     var speech = req.body.result && req.body.result.parameters && req.body.result.parameters.echoText ? req.body.result.parameters.echoText : "Seems like some problem. Speak again."
     var http = require('http');        
     var item;
-    if(req.body.result.parameters.EatingTime=="Dinner")
-    {
-        item="IceCream"
-    }
-    else if(req.body.result.parameters.EatingTime=="Lunch")
-    {
-        item="FriedRice"
-    }
-    else if(req.body.result.parameters.EatingTime=="Breakfast")
-    {
-        item="Idly"
-    }
+    var FoodTime = req.body.result.parameters.EatingTime;    
+
+    var sql=require('mssql');
+
+    //configuring alfredapi database
+    var config={
+            user : 'AlfredAdmin',
+            password:'@lfred123',
+            server:'alfredapi.database.windows.net',
+            database:'AlfredDatabase'
+    };
+
+    //connect to database
+    sql.connect(config,function(err){
+        if(err) console.log(err);
+
+        //create request object
+        var request=new sql.Request();
+
+        //query to AlfredDatabase
+        request.query('select * from Food where FoodTime='+FoodTime,function(err,recordset){
+           
+            recordset.forEach(function(element) {
+                item += element.Name;
+            }, this);
+
+        });
+    })  ;  
 
 
     return res.json({
