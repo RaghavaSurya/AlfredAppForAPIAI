@@ -28,7 +28,21 @@ restService.post('/echo', function (req, res) {
 });
 
 restService.get('/ss',function(req,res){
-    res.send("Hello");
+    var Connection = require('tedious').Connection;  
+    var config = {  
+        userName: 'AlfredAdmin',  
+        password: '@lfred123',  
+        server: 'alfredapi.database.windows.net',  
+        // If you are on Microsoft Azure, you need this:  
+        options: {encrypt: true, database: 'AlfredDatabase'}  
+    };  
+    var connection = new Connection(config);  
+    connection.on('connect', function(err) {  
+    // If no error, then good to proceed.  
+        console.log("Connected");  
+        res.send("Connected to sql server");
+    });
+    res.send("Connected");
 })
 
 
