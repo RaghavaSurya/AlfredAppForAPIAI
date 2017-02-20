@@ -41,8 +41,7 @@ restService.get('/ss', function (req, res) {
         user: 'AlfredAdmin',
         password: 'Alfred123',
         server: 'alfredapi.database.windows.net',
-        database: 'AlfredDatabase',
-        port:1433,
+        database: 'AlfredDatabase',       
         options: {
             encrypt: true
         }
