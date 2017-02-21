@@ -36,25 +36,10 @@ restService.get('/ss', function (req, res) {
 
     // res.send('done');
 
-    var sql = require('mssql');
-    var config = {
-        user: 'AlfredAdmin',
-        password: 'Alfred123',
-        server: 'alfredapi.database.windows.net',
-        database: 'AlfredDatabase',       
-        options: {
-            encrypt: true
+    var request = require('request');
+    request('http://alfredapi20170217032800.azurewebsites.net/api/values/2', function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            console.log(body) // Show the HTML for the Google homepage. 
         }
-    };
-
-    var connection=new sql.Connection(config);
-    connection.connect();
-
-    var request=new sql.Request(connection);
-    var sqlQuery="Select * from Food";
-    request.query(sqlQuery,function(err,recordset){
-        if(err) res.json(err);
-        else
-        res.json(recordset);
-    });
+    })
 });
