@@ -24,15 +24,13 @@ restService.post('/echo', function (req, res) {
 
     var query='http://alfredapi20170217032800.azurewebsites.net/api/values?query='+FoodTime;
 
-    request(query,function (error, response, body) {
-        if (!error && response.statusCode == 200) {
-            item=body;
-        }
+    request(query,function (error, response, body) {       
+            item=body;       
         if(error) item = error;
     })
 
     return res.json({
-        speech: query,
+        speech: item,
         displayText: speech,
         source: 'webhook-echo-sample'
     });
