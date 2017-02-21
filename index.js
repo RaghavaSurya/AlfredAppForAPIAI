@@ -32,7 +32,7 @@ restService.post('/echo', function (req, res) {
     })
 
     return res.json({
-        speech: item,
+        speech: query,
         displayText: speech,
         source: 'webhook-echo-sample'
     });
