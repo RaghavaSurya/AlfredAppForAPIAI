@@ -18,8 +18,16 @@ restService.use(bodyParser.json());
 restService.post('/echo', function (req, res) {
     var speech = req.body.result && req.body.result.parameters && req.body.result.parameters.echoText ? req.body.result.parameters.echoText : "Seems like some problem. Speak again.";
     var http = require('http');
-    var item = "CocaCola";
     var FoodTime = req.body.result.parameters.EatingTime;
+    var item="We have everything here";
+    var request = require('request');
+    
+    request('http://alfredapi20170217032800.azurewebsites.net/api/values?query='+FoodTime, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            item=body;
+        }
+    })
+
     return res.json({
         speech: item,
         displayText: speech,
@@ -34,12 +42,5 @@ restService.get('/ss', function (req, res) {
     // var food=db('Food.json');
     // food.insert({FoodName:'Gobi Manchuria',Type:'Starter',})
 
-    // res.send('done');
-
-    var request = require('request');
-    request('http://alfredapi20170217032800.azurewebsites.net/api/values/2', function (error, response, body) {
-        if (!error && response.statusCode == 200) {
-            console.log(body) // Show the HTML for the Google homepage. 
-        }
-    })
+    // res.send('done');    
 });
