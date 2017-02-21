@@ -21,11 +21,12 @@ restService.post('/echo', function (req, res) {
     var FoodTime = req.body.result.parameters.EatingTime;
     var item="We have everything here";
     var request = require('request');
-    
+
     request('http://alfredapi20170217032800.azurewebsites.net/api/values?query='+FoodTime, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             item=body;
         }
+        if(error) item = error;
     })
 
     return res.json({
