@@ -27,18 +27,27 @@ restService.post('/echo', function (req, res) {
     request('http://alfredapi20170217032800.azurewebsites.net/api/values?query=Lunch',function (error, response, body) {       
             item = body;       
         if(error) item = error;
-    })
-
-    return res.json({
+         return res.json({
         speech: item,
         displayText: speech,
         source: 'webhook-echo-sample'
-    });
+    });    
+    });    
 });
 
 restService.get('/ss', function (req, res) {
 
+    var request = require('request');
+    var item= " ";
+    var speech=" ";
+    request('http://alfredapi20170217032800.azurewebsites.net/api/values?query=Lunch',function (error, response, body) {       
+            item = body;   
+            
+        if(error) item = error;
+       
+    });
 
+    
     // var db=require('node-localdb');
     // var food=db('Food.json');
     // food.insert({FoodName:'Gobi Manchuria',Type:'Starter',})
