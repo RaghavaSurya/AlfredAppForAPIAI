@@ -25,7 +25,7 @@ restService.post('/echo', function (req, res) {
     var query='http://alfredapi20170217032800.azurewebsites.net/api/values?query='+FoodTime;
 
     request(query,function (error, response, body) {       
-            item=body;       
+            item = body;       
         if(error) item = error;
     })
 
